@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run tests" type="MixExUnitRunConfigurationType" factoryName="Elixir Mix ExUnit">
+    <module name="phoenix-events-live" />
+    <module name="phoenix-events-live" />
+    <module-filters inherit-application-module-filters="true" />
+    <method v="2" />
+  </configuration>
+</component>

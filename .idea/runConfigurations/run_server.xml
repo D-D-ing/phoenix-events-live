@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run server" type="MixRunConfigurationType" factoryName="Elixir Mix">
+    <module name="phoenix-events-live" />
+    <mix>
+      <argument>phx.server</argument>
+    </mix>
+    <module name="phoenix-events-live" />
+    <module-filters inherit-application-module-filters="true" />
+    <method v="2" />
+  </configuration>
+</component>
