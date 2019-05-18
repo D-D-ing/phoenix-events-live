@@ -27,9 +27,6 @@ phoenix_events_live-*.tar
 # this depending on your deployment strategy.
 /priv/static/
 
-# file with production credentials
-/config/prod.secret.exs
-
 # Intellij IDEA files
 /.idea/*.xml
 /.idea/libraries

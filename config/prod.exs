@@ -10,11 +10,24 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :phoenix_events_live, PhoenixEventsLiveWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  url: [host: System.get_env("PHX_URL"), port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :phoenix_events_live, PhoenixEventsLive.Repo,
+       adapter: Ecto.Adapters.Postgres,
+       username: System.get_env("PGUSER"),
+       password: System.get_env("PGPASSWORD"),
+       database: System.get_env("PGDATABASE"),
+       hostname: System.get_env("PGHOST"),
+       port: System.get_env("PGPORT"),
+       pool_size: String.to_integer(System.get_env("PGPOOLSIZE") || "10")
+
+config :phoenix_events_live, PhoenixEventsLiveWeb.Endpoint,
+       http: [:inet6, port: String.to_integer(System.get_env("PHX_PORT") || "4000")],
+       secret_key_base: System.get_env("PHX_SECRET_KEY_BASE")
 
 # ## SSL Support
 #
@@ -59,7 +72,3 @@ config :logger, level: :info
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
-
-# Finally import the config/prod.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "prod.secret.exs"
