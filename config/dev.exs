@@ -6,7 +6,7 @@ config :phoenix_events_live, PhoenixEventsLive.Repo,
   password: "postgres",
   database: "phoenix_events_live_dev",
   hostname: "localhost",
-  post: 5432,
+  port: 65432,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
