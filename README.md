@@ -1,20 +1,12 @@
 # PhoenixEventsLive
 
-To start your Phoenix server:
+To start the app:
 
   * Install dependencies with `mix deps.get`
-  * Start postgres db docker container with `./startup_db` (or start your own postgres db)
-  * Create and migrate your database with `mix ecto.setup`
+  * Start your postgres db (for port and password see config/dev.exs)
+    * You can start a postgres db in a docker container with `./startup_db`
+    * Create and migrate your database with `mix ecto.setup`
+  * Copy generated nuxt app (content of `dist` after running `npm run generate`) to priv/static
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix

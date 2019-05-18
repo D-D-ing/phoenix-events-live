@@ -12,8 +12,8 @@ defmodule PhoenixEventsLiveWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :phoenix_events_live,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: false
+    # only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
