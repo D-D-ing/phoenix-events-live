@@ -31,4 +31,5 @@ phoenix_events_live-*.tar
 /.idea/*.xml
 /.idea/dataSources
 /.idea/libraries
+phoenix_events_live.iml
 phoenix-events-live.iml
