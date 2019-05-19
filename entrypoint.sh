@@ -10,9 +10,13 @@ done
 echo "$(date) - database is up"
 
 # Create, migrate and seed database
-mix ecto.create
-mix ecto.migrate
-mix run priv/repo/seeds.exs
+# Create, migrate, and seed database if it doesn't exist.
+if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
+  echo "Database $PGDATABASE does not exist. Creating..."
+  mix ecto.create
+  mix ecto.migrate
+  mix run priv/repo/seeds.exs
+fi
 
 echo "$(date) - run server"
 exec mix phx.server
