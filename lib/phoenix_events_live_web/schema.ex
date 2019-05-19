@@ -12,6 +12,12 @@ defmodule PhoenixEventsLiveWeb.Schema do
     field :all_events, non_null(list_of(non_null(:event))) do
       resolve &EventResolver.all_events/3
     end
+
+    field :get_event_by_access_token, non_null(:event) do
+      arg :access_token, non_null(:string)
+
+      resolve &EventResolver.get_event_by_access_token/3
+    end
   end
 
   mutation do

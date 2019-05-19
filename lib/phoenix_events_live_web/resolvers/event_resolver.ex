@@ -6,6 +6,15 @@ defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
     {:ok, events}
   end
 
+  def get_event_by_access_token(_root, args, info) do
+    case Events.get_event_by_access_token(args.access_token) do
+      nil ->
+        {:error, "event not found"}
+      event ->
+        {:ok, event}
+    end
+  end
+
   def create_event(_root, args, _info) do
     case Events.create_event(args) do
       {:ok, event} ->

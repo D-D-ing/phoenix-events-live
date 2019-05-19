@@ -63,6 +63,18 @@ defmodule PhoenixEventsLive.EventsTest do
       event = event_fixture()
       assert %Ecto.Changeset{} = Events.change_event(event)
     end
+
+    test "get_event_by_access_token/1 for an existing event" do
+      event =
+        event_fixture()
+        |> Repo.preload(:interactions)
+      fetched_event = Events.get_event_by_access_token(event.access_token)
+      assert event == fetched_event
+    end
+
+    test "get_event_by_access_token/1 for not existing event" do
+      assert nil == Events.get_event_by_access_token("invalid_token")
+    end
   end
 
   describe "interactions" do

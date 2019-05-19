@@ -41,6 +41,21 @@ defmodule PhoenixEventsLive.Events do
   """
   def get_event!(id), do: Repo.get!(Event, id)
 
+
+  @doc """
+  Gets the single event referenced by the given accessToken.
+  Interactions are preloaded in the returned event.
+
+  ## Examples
+
+    iex> get_event_by_access_token("fjdklasjfpdejkfikrnmapviurhafejeifiojeosoifj")
+    %Event{}
+  """
+  def get_event_by_access_token(access_token) do
+    Repo.get_by(Event, [access_token: access_token])
+    |> Repo.preload(:interactions)
+  end
+
   @doc """
   Creates a event.
 
