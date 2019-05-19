@@ -6,6 +6,7 @@ config :phoenix_events_live, PhoenixEventsLive.Repo,
   password: "postgres",
   database: "phoenix_events_live_test",
   hostname: "localhost",
+  port: 65432,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
