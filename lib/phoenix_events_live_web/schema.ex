@@ -1,22 +1,16 @@
 defmodule PhoenixEventsLiveWeb.Schema do
   use Absinthe.Schema
+  import_types PhoenixEventsLiveWeb.Schema.Types
 
-  alias PhoenixEventsLiveWeb.InteractionResolver
-
-  object :interaction do
-    field :id, non_null(:id)
-    field :name, non_null(:string)
-    field :type, non_null(:integer)
-    field :text, :string
-    field :value, :string
-    field :items, list_of(non_null(:string))
-    field :event_id, non_null(:id)
-  end
-
+  alias PhoenixEventsLiveWeb.Resolvers.EventResolver
 
   query do
     field :all_interactions, non_null(list_of(non_null(:interaction))) do
-      resolve &InteractionResolver.all_interactions/3
+      resolve &EventResolver.all_interactions/3
+    end
+
+    field :all_events, non_null(list_of(non_null(:event))) do
+      resolve &EventResolver.all_events/3
     end
   end
 
@@ -29,7 +23,14 @@ defmodule PhoenixEventsLiveWeb.Schema do
       arg :items, list_of(non_null(:string))
       arg :event_id, non_null(:id)
 
-      resolve &InteractionResolver.create_interaction/3
+      resolve &EventResolver.create_interaction/3
+    end
+
+    field :create_event, :event do
+      arg :name, non_null(:string)
+      arg :description, :string
+
+      resolve &EventResolver.create_event/3
     end
   end
 end

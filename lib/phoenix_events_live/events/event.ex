@@ -15,7 +15,17 @@ defmodule PhoenixEventsLive.Events.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:name, :description, :accessToken])
-    |> validate_required([:name, :description, :accessToken])
+    |> cast(attrs, [:name, :description])
+    |> validate_required([:name])
+    |> put_access_token()
+  end
+
+  defp put_access_token(%Ecto.Changeset{valid?: true} = changeset) do
+    Ecto.Changeset.change(changeset, accessToken: get_random_string(64))
+  end
+  defp put_access_token(other_changeset), do: other_changeset
+
+  defp get_random_string(length) do
+    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
   end
 end

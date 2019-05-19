@@ -21,6 +21,10 @@ defmodule PhoenixEventsLive.Events do
     Repo.all(Event)
   end
 
+  def list_events_preloaded do
+    Repo.all from p in Event, preload: [:interactions]
+  end
+
   @doc """
   Gets a single event.
 

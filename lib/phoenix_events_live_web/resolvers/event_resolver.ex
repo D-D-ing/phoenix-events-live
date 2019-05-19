@@ -1,5 +1,19 @@
-defmodule PhoenixEventsLiveWeb.InteractionResolver do
+defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
   alias PhoenixEventsLive.Events
+
+  def all_events(_root, _args, _info) do
+    events = Events.list_events_preloaded()
+    {:ok, events}
+  end
+
+  def create_event(_root, args, _info) do
+    case Events.create_event(args) do
+      {:ok, event} ->
+        {:ok, event}
+      _error ->
+        {:error, "could not create event"}
+    end
+  end
 
   def all_interactions(_root, _args, _info) do
     interactions = Events.list_interactions()

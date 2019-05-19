@@ -6,8 +6,8 @@ defmodule PhoenixEventsLive.EventsTest do
   describe "events" do
     alias PhoenixEventsLive.Events.Event
 
-    @valid_attrs %{accessToken: "some accessToken", description: "some description", name: "some name"}
-    @update_attrs %{accessToken: "some updated accessToken", description: "some updated description", name: "some updated name"}
+    @valid_attrs %{description: "some description", name: "some name"}
+    @update_attrs %{description: "some updated description", name: "some updated name"}
     @invalid_attrs %{accessToken: nil, description: nil, name: nil}
 
     def event_fixture(attrs \\ %{}) do
@@ -31,7 +31,6 @@ defmodule PhoenixEventsLive.EventsTest do
 
     test "create_event/1 with valid data creates a event" do
       assert {:ok, %Event{} = event} = Events.create_event(@valid_attrs)
-      assert event.accessToken == "some accessToken"
       assert event.description == "some description"
       assert event.name == "some name"
     end
@@ -43,9 +42,9 @@ defmodule PhoenixEventsLive.EventsTest do
     test "update_event/2 with valid data updates the event" do
       event = event_fixture()
       assert {:ok, %Event{} = event} = Events.update_event(event, @update_attrs)
-      assert event.accessToken == "some updated accessToken"
       assert event.description == "some updated description"
       assert event.name == "some updated name"
+      assert String.length(event.accessToken) == 64
     end
 
     test "update_event/2 with invalid data returns error changeset" do
@@ -69,14 +68,15 @@ defmodule PhoenixEventsLive.EventsTest do
   describe "interactions" do
     alias PhoenixEventsLive.Events.Interaction
 
-    @valid_attrs %{name: "some name", text: "some text", type: 42, value: "some value"}
+    @valid_attrs %{name: "some name", text: "some text", type: 42, value: "some value", visible: :false}
     @update_attrs %{name: "some updated name", text: "some updated text", type: 43, value: "some updated value"}
     @invalid_attrs %{name: nil, text: nil, type: nil, value: nil}
 
     def interaction_fixture(attrs \\ %{}) do
+      event = insert_event()
       {:ok, interaction} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into(Map.merge(%{event_id: event.id}, @valid_attrs))
         |> Events.create_interaction()
 
       interaction
@@ -93,7 +93,9 @@ defmodule PhoenixEventsLive.EventsTest do
     end
 
     test "create_interaction/1 with valid data creates a interaction" do
-      assert {:ok, %Interaction{} = interaction} = Events.create_interaction(@valid_attrs)
+      event = insert_event()
+      attr = Map.merge(%{event_id: event.id}, @valid_attrs)
+      assert {:ok, %Interaction{} = interaction} = Events.create_interaction(attr)
       assert interaction.name == "some name"
       assert interaction.text == "some text"
       assert interaction.type == 42

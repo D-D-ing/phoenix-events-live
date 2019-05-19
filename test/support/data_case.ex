@@ -22,6 +22,7 @@ defmodule PhoenixEventsLive.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import PhoenixEventsLive.DataCase
+      import PhoenixEventsLive.TestHelpers
     end
   end
 
