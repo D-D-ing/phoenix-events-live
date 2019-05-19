@@ -29,5 +29,6 @@ phoenix_events_live-*.tar
 
 # Intellij IDEA files
 /.idea/*.xml
+/.idea/dataSources
 /.idea/libraries
 phoenix-events-live.iml

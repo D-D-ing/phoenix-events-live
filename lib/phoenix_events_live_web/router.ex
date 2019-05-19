@@ -13,6 +13,16 @@ defmodule PhoenixEventsLiveWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: PhoenixEventsLiveWeb.Schema,
+      interface: :simple,
+      context: %{pubsub: PhoenixEventsLiveWeb.Endpoint}
+  end
+
+
   scope "/", PhoenixEventsLiveWeb do
     pipe_through :browser
 
