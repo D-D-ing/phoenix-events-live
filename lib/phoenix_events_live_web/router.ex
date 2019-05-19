@@ -21,6 +21,9 @@ defmodule PhoenixEventsLiveWeb.Router do
       socket: PhoenixEventsLiveWeb.UserSocket,
       interface: :simple,
       context: %{pubsub: PhoenixEventsLiveWeb.Endpoint}
+
+    forward "/", Absinthe.Plug,
+      schema: PhoenixEventsLiveWeb.Schema
   end
 
 
