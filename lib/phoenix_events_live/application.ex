@@ -11,9 +11,10 @@ defmodule PhoenixEventsLive.Application do
       # Start the Ecto repository
       PhoenixEventsLive.Repo,
       # Start the endpoint when the application starts
-      PhoenixEventsLiveWeb.Endpoint
+      {PhoenixEventsLiveWeb.Endpoint, []},
       # Starts a worker by calling: PhoenixEventsLive.Worker.start_link(arg)
       # {PhoenixEventsLive.Worker, arg},
+      {Absinthe.Subscription, [PhoenixEventsLiveWeb.Endpoint]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

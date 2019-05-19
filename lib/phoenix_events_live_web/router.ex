@@ -18,6 +18,7 @@ defmodule PhoenixEventsLiveWeb.Router do
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
       schema: PhoenixEventsLiveWeb.Schema,
+      socket: PhoenixEventsLiveWeb.UserSocket,
       interface: :simple,
       context: %{pubsub: PhoenixEventsLiveWeb.Endpoint}
   end

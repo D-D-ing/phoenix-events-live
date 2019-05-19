@@ -33,4 +33,10 @@ defmodule PhoenixEventsLiveWeb.Schema do
       resolve &EventResolver.create_event/3
     end
   end
+
+  subscription do
+    field :event_created, :event do
+      config fn _args, _info -> {:ok, topic: true} end
+    end
+  end
 end

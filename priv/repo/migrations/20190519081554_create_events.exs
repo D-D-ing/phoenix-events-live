@@ -5,7 +5,7 @@ defmodule PhoenixEventsLive.Repo.Migrations.CreateEvents do
     create table(:events) do
       add :name, :string
       add :description, :string
-      add :accessToken, :string
+      add :access_token, :string
 
       timestamps()
     end

@@ -1,5 +1,8 @@
 defmodule PhoenixEventsLiveWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: PhoenixEventsLiveWeb.Schema
+
+  ## Transports
 
   ## Channels
   # channel "room:*", PhoenixEventsLiveWeb.RoomChannel

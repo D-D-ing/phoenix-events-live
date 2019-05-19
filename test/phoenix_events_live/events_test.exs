@@ -44,7 +44,7 @@ defmodule PhoenixEventsLive.EventsTest do
       assert {:ok, %Event{} = event} = Events.update_event(event, @update_attrs)
       assert event.description == "some updated description"
       assert event.name == "some updated name"
-      assert String.length(event.accessToken) == 64
+      assert String.length(event.access_token) == 64
     end
 
     test "update_event/2 with invalid data returns error changeset" do

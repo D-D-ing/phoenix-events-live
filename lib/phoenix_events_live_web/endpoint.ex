@@ -1,5 +1,6 @@
 defmodule PhoenixEventsLiveWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :phoenix_events_live
+  use Absinthe.Phoenix.Endpoint
 
   socket "/socket", PhoenixEventsLiveWeb.UserSocket,
     websocket: true,

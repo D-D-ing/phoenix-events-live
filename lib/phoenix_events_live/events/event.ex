@@ -3,7 +3,7 @@ defmodule PhoenixEventsLive.Events.Event do
   import Ecto.Changeset
 
   schema "events" do
-    field :accessToken, :string
+    field :access_token, :string
     field :description, :string
     field :name, :string
 
@@ -21,7 +21,8 @@ defmodule PhoenixEventsLive.Events.Event do
   end
 
   defp put_access_token(%Ecto.Changeset{valid?: true} = changeset) do
-    Ecto.Changeset.change(changeset, accessToken: get_random_string(64))
+    # TODO: validate that the generated access_token is unique
+    Ecto.Changeset.change(changeset, access_token: get_random_string(64))
   end
   defp put_access_token(other_changeset), do: other_changeset
 

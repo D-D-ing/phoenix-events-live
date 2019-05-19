@@ -9,6 +9,7 @@ defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
   def create_event(_root, args, _info) do
     case Events.create_event(args) do
       {:ok, event} ->
+        Absinthe.Subscription.publish(PhoenixEventsLiveWeb.Endpoint, event, event_created: true)
         {:ok, event}
       _error ->
         {:error, "could not create event"}

@@ -17,6 +17,7 @@ defmodule PhoenixEventsLiveWeb.Schema.Types do
     field :id, non_null(:id)
     field :name, non_null(:string)
     field :description, :string
+    field :access_token, :string
     field :interactions, list_of(non_null(:interaction))
   end
 end
