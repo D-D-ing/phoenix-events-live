@@ -25,6 +25,11 @@ config :phoenix_events_live, PhoenixEventsLive.Repo,
        port: System.get_env("PGPORT"),
        pool_size: String.to_integer(System.get_env("PGPOOLSIZE") || "10")
 
+# Guardian config
+config :phoenix_events_live, PhoenixEventsLive.Guardian,
+       issuer: "dding_conference_app",
+       secret_key: System.get_env("PHX_GUARDIAN_SECRET_KEY")
+
 config :phoenix_events_live, PhoenixEventsLiveWeb.Endpoint,
        http: [:inet6, port: String.to_integer(System.get_env("PHX_PORT") || "4000")],
        secret_key_base: System.get_env("PHX_SECRET_KEY_BASE")

@@ -19,4 +19,12 @@ defmodule PhoenixEventsLiveWeb.FallbackController do
     |> put_view(PhoenixEventsLiveWeb.ErrorView)
     |> render(:"404")
   end
+
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{status: "error",
+              message: "Error while logging in."}
+           )
+  end
 end

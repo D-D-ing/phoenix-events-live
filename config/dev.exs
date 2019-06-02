@@ -10,6 +10,11 @@ config :phoenix_events_live, PhoenixEventsLive.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+# Guardian config
+config :phoenix_events_live, PhoenixEventsLive.Guardian,
+       issuer: "dding_conference_app",
+       secret_key: "ltt+A2RvGId6QPyhCbzmoHbOFrMDLgJRS+rSRla5ihWjLdo5XUp9P39PZubVF+9i"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

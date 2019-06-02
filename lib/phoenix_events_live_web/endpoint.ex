@@ -43,5 +43,6 @@ defmodule PhoenixEventsLiveWeb.Endpoint do
     key: "_phoenix_events_live_key",
     signing_salt: "o2E4vLbQ"
 
+  plug CORSPlug
   plug PhoenixEventsLiveWeb.Router
 end

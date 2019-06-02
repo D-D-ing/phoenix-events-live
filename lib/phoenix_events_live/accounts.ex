@@ -4,8 +4,10 @@ defmodule PhoenixEventsLive.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias PhoenixEventsLive.Repo
+  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
+  alias PhoenixEventsLive.Guardian
+  alias PhoenixEventsLive.Repo
   alias PhoenixEventsLive.Accounts.User
 
   @doc """
@@ -37,6 +39,34 @@ defmodule PhoenixEventsLive.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def jwt_sign_in_with_password(username, password) do
+    case username_password_auth(username, password) do
+      {:ok, user} ->
+        Guardian.encode_and_sign(user)
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  defp username_password_auth(username, password)
+       when is_binary(username)
+            and is_binary(password) do
+    case Repo.get_by(User, username: username) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login error."}
+      user ->
+        verify_password(password, user)
+    end
+  end
+
+  defp verify_password(password, %User{} = user) when is_binary(password) do
+    if checkpw(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_password}
+    end
+  end
   @doc """
   Creates a user.
 
@@ -52,6 +82,12 @@ defmodule PhoenixEventsLive.Accounts do
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_user_with_password(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 

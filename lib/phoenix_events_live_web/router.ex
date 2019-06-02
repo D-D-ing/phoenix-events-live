@@ -13,10 +13,14 @@ defmodule PhoenixEventsLiveWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api" do
+  pipeline :jwt_authenticated do
+    plug PhoenixEventsLive.Guardian.AuthPipeline
+  end
+
+  scope "/api/graphql" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
+    forward "/dev", Absinthe.Plug.GraphiQL,
       schema: PhoenixEventsLiveWeb.Schema,
       socket: PhoenixEventsLiveWeb.UserSocket,
       interface: :simple,
@@ -26,6 +30,17 @@ defmodule PhoenixEventsLiveWeb.Router do
       schema: PhoenixEventsLiveWeb.Schema
   end
 
+  scope "/api/rest", PhoenixEventsLiveWeb do
+    pipe_through [:api, :jwt_authenticated]
+
+    get "/my_user", UserController, :show
+  end
+
+  scope "/api/rest", PhoenixEventsLiveWeb do
+    pipe_through :api
+
+    post "/sign_in_with_password", UserController, :sign_in_with_password
+  end
 
   scope "/", PhoenixEventsLiveWeb do
     pipe_through :browser
