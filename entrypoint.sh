@@ -15,6 +15,7 @@ if [[ -z `psql -Atqc "\\list $PGDATABASE"` ]]; then
   echo "Database $PGDATABASE does not exist. Creating..."
   mix ecto.create
   mix ecto.migrate
+  echo "Seeding database..."
   mix run priv/repo/seeds.exs
 fi
 
