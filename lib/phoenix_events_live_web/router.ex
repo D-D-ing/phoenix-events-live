@@ -17,14 +17,18 @@ defmodule PhoenixEventsLiveWeb.Router do
     plug PhoenixEventsLive.Guardian.AuthPipeline
   end
 
+  pipeline :graphql do
+    plug PhoenixEventsLiveWeb.Context
+  end
+
   scope "/api/graphql" do
-    pipe_through :api
+    pipe_through [:api, :graphql]
 
     forward "/dev", Absinthe.Plug.GraphiQL,
       schema: PhoenixEventsLiveWeb.Schema,
       socket: PhoenixEventsLiveWeb.UserSocket,
-      interface: :simple,
-      context: %{pubsub: PhoenixEventsLiveWeb.Endpoint}
+      interface: :simple
+      # context: %{pubsub: PhoenixEventsLiveWeb.Endpoint}
 
     forward "/", Absinthe.Plug,
       schema: PhoenixEventsLiveWeb.Schema

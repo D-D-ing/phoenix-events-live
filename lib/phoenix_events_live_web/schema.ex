@@ -2,6 +2,7 @@ defmodule PhoenixEventsLiveWeb.Schema do
   use Absinthe.Schema
   import_types PhoenixEventsLiveWeb.Schema.Types
 
+  alias PhoenixEventsLiveWeb.Resolvers.AccountResolver
   alias PhoenixEventsLiveWeb.Resolvers.EventResolver
 
   query do
@@ -17,6 +18,17 @@ defmodule PhoenixEventsLiveWeb.Schema do
       arg :access_token, non_null(:string)
 
       resolve &EventResolver.get_event_by_access_token/3
+    end
+
+    field :sign_in, :session do
+      arg :username, non_null(:string)
+      arg :password, non_null(:string)
+
+      resolve &AccountResolver.login/3
+    end
+
+    field :my_user, :user do
+      resolve &AccountResolver.my_user/3
     end
   end
 
