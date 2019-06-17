@@ -11,4 +11,4 @@ To start the app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-A development graphql server (graphiql) is running at http://localhost:4000/api/graphql/dev.
+A development graphql server (graphiql) is running at http://localhost:4000/api/graphiql.
