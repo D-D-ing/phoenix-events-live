@@ -9,11 +9,11 @@ defmodule PhoenixEventsLive.Repo.Migrations.CreateInteractions do
       add :value, :string
       add :visible, :boolean, default: :false
       add :items, {:array, :string}
-      add :event_id, references(:events, on_delete: :nothing)
+      add :live_event_id, references(:live_events, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:interactions, [:event_id])
+    create index(:interactions, [:live_event_id])
   end
 end

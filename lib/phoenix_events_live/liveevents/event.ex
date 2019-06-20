@@ -1,13 +1,13 @@
-defmodule PhoenixEventsLive.Events.Event do
+defmodule PhoenixEventsLive.LiveEvents.LiveEvent do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "events" do
+  schema "live_events" do
     field :access_token, :string
     field :description, :string
     field :name, :string
 
-    has_many :interactions, PhoenixEventsLive.Events.Interaction
+    has_many :interactions, PhoenixEventsLive.LiveEvents.Interaction
 
     timestamps()
   end

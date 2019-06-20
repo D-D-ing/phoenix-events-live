@@ -1,113 +1,113 @@
-defmodule PhoenixEventsLive.EventsTest do
+defmodule PhoenixEventsLive.LiveEventsTest do
   use PhoenixEventsLive.DataCase
 
-  alias PhoenixEventsLive.Events
+  alias PhoenixEventsLive.LiveEvents
 
-  describe "events" do
-    alias PhoenixEventsLive.Events.Event
+  describe "live_events" do
+    alias PhoenixEventsLive.LiveEvents.LiveEvent
 
     @valid_attrs %{description: "some description", name: "some name"}
     @update_attrs %{description: "some updated description", name: "some updated name"}
     @invalid_attrs %{accessToken: nil, description: nil, name: nil}
 
-    def event_fixture(attrs \\ %{}) do
-      {:ok, event} =
+    def live_event_fixture(attrs \\ %{}) do
+      {:ok, live_event} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Events.create_event()
+        |> LiveEvents.create_live_event()
 
-      event
+      live_event
     end
 
-    test "list_events/0 returns all events" do
-      event = event_fixture()
-      assert Events.list_events() == [event]
+    test "list_live_events/0 returns all live_events" do
+      live_event = live_event_fixture()
+      assert LiveEvents.list_live_events() == [live_event]
     end
 
-    test "get_event!/1 returns the event with given id" do
-      event = event_fixture()
-      assert Events.get_event!(event.id) == event
+    test "get_live_event!/1 returns the live_event with given id" do
+      live_event = live_event_fixture()
+      assert LiveEvents.get_live_event!(live_event.id) == live_event
     end
 
-    test "create_event/1 with valid data creates a event" do
-      assert {:ok, %Event{} = event} = Events.create_event(@valid_attrs)
-      assert event.description == "some description"
-      assert event.name == "some name"
+    test "create_live_event/1 with valid data creates a live_event" do
+      assert {:ok, %LiveEvent{} = live_event} = LiveEvents.create_live_event(@valid_attrs)
+      assert live_event.description == "some description"
+      assert live_event.name == "some name"
     end
 
-    test "create_event/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Events.create_event(@invalid_attrs)
+    test "create_live_event/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = LiveEvents.create_live_event(@invalid_attrs)
     end
 
-    test "update_event/2 with valid data updates the event" do
-      event = event_fixture()
-      assert {:ok, %Event{} = event} = Events.update_event(event, @update_attrs)
-      assert event.description == "some updated description"
-      assert event.name == "some updated name"
-      assert String.length(event.access_token) == 64
+    test "update_live_event/2 with valid data updates the live_event" do
+      live_event = live_event_fixture()
+      assert {:ok, %LiveEvent{} = live_event} = LiveEvents.update_live_event(live_event, @update_attrs)
+      assert live_event.description == "some updated description"
+      assert live_event.name == "some updated name"
+      assert String.length(live_event.access_token) == 64
     end
 
-    test "update_event/2 with invalid data returns error changeset" do
-      event = event_fixture()
-      assert {:error, %Ecto.Changeset{}} = Events.update_event(event, @invalid_attrs)
-      assert event == Events.get_event!(event.id)
+    test "update_live_event/2 with invalid data returns error changeset" do
+      live_event = live_event_fixture()
+      assert {:error, %Ecto.Changeset{}} = LiveEvents.update_live_event(live_event, @invalid_attrs)
+      assert live_event == LiveEvents.get_live_event!(live_event.id)
     end
 
-    test "delete_event/1 deletes the event" do
-      event = event_fixture()
-      assert {:ok, %Event{}} = Events.delete_event(event)
-      assert_raise Ecto.NoResultsError, fn -> Events.get_event!(event.id) end
+    test "delete_live_event/1 deletes the live_event" do
+      live_event = live_event_fixture()
+      assert {:ok, %LiveEvent{}} = LiveEvents.delete_live_event(live_event)
+      assert_raise Ecto.NoResultsError, fn -> LiveEvents.get_live_event!(live_event.id) end
     end
 
-    test "change_event/1 returns a event changeset" do
-      event = event_fixture()
-      assert %Ecto.Changeset{} = Events.change_event(event)
+    test "change_live_event/1 returns a live_event changeset" do
+      live_event = live_event_fixture()
+      assert %Ecto.Changeset{} = LiveEvents.change_live_event(live_event)
     end
 
-    test "get_event_by_access_token/1 for an existing event" do
-      event =
-        event_fixture()
+    test "get_live_event_by_access_token/1 for an existing live_event" do
+      live_event =
+        live_event_fixture()
         |> Repo.preload(:interactions)
-      fetched_event = Events.get_event_by_access_token(event.access_token)
-      assert event == fetched_event
+      fetched_live_event = LiveEvents.get_live_event_by_access_token(live_event.access_token)
+      assert live_event == fetched_live_event
     end
 
-    test "get_event_by_access_token/1 for not existing event" do
-      assert nil == Events.get_event_by_access_token("invalid_token")
+    test "get_live_event_by_access_token/1 for not existing live_event" do
+      assert nil == LiveEvents.get_live_event_by_access_token("invalid_token")
     end
   end
 
   describe "interactions" do
-    alias PhoenixEventsLive.Events.Interaction
+    alias PhoenixEventsLive.LiveEvents.Interaction
 
     @valid_attrs %{name: "some name", text: "some text", type: 42, value: "some value", visible: :false}
     @update_attrs %{name: "some updated name", text: "some updated text", type: 43, value: "some updated value"}
     @invalid_attrs %{name: nil, text: nil, type: nil, value: nil}
 
     def interaction_fixture(attrs \\ %{}) do
-      event = insert_event()
+      live_event = insert_live_event()
       {:ok, interaction} =
         attrs
-        |> Enum.into(Map.merge(%{event_id: event.id}, @valid_attrs))
-        |> Events.create_interaction()
+        |> Enum.into(Map.merge(%{live_event_id: live_event.id}, @valid_attrs))
+        |> LiveEvents.create_interaction()
 
       interaction
     end
 
     test "list_interactions/0 returns all interactions" do
       interaction = interaction_fixture()
-      assert Events.list_interactions() == [interaction]
+      assert LiveEvents.list_interactions() == [interaction]
     end
 
     test "get_interaction!/1 returns the interaction with given id" do
       interaction = interaction_fixture()
-      assert Events.get_interaction!(interaction.id) == interaction
+      assert LiveEvents.get_interaction!(interaction.id) == interaction
     end
 
     test "create_interaction/1 with valid data creates a interaction" do
-      event = insert_event()
-      attr = Map.merge(%{event_id: event.id}, @valid_attrs)
-      assert {:ok, %Interaction{} = interaction} = Events.create_interaction(attr)
+      live_event = insert_live_event()
+      attr = Map.merge(%{live_event_id: live_event.id}, @valid_attrs)
+      assert {:ok, %Interaction{} = interaction} = LiveEvents.create_interaction(attr)
       assert interaction.name == "some name"
       assert interaction.text == "some text"
       assert interaction.type == 42
@@ -115,12 +115,12 @@ defmodule PhoenixEventsLive.EventsTest do
     end
 
     test "create_interaction/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Events.create_interaction(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} = LiveEvents.create_interaction(@invalid_attrs)
     end
 
     test "update_interaction/2 with valid data updates the interaction" do
       interaction = interaction_fixture()
-      assert {:ok, %Interaction{} = interaction} = Events.update_interaction(interaction, @update_attrs)
+      assert {:ok, %Interaction{} = interaction} = LiveEvents.update_interaction(interaction, @update_attrs)
       assert interaction.name == "some updated name"
       assert interaction.text == "some updated text"
       assert interaction.type == 43
@@ -129,19 +129,19 @@ defmodule PhoenixEventsLive.EventsTest do
 
     test "update_interaction/2 with invalid data returns error changeset" do
       interaction = interaction_fixture()
-      assert {:error, %Ecto.Changeset{}} = Events.update_interaction(interaction, @invalid_attrs)
-      assert interaction == Events.get_interaction!(interaction.id)
+      assert {:error, %Ecto.Changeset{}} = LiveEvents.update_interaction(interaction, @invalid_attrs)
+      assert interaction == LiveEvents.get_interaction!(interaction.id)
     end
 
     test "delete_interaction/1 deletes the interaction" do
       interaction = interaction_fixture()
-      assert {:ok, %Interaction{}} = Events.delete_interaction(interaction)
-      assert_raise Ecto.NoResultsError, fn -> Events.get_interaction!(interaction.id) end
+      assert {:ok, %Interaction{}} = LiveEvents.delete_interaction(interaction)
+      assert_raise Ecto.NoResultsError, fn -> LiveEvents.get_interaction!(interaction.id) end
     end
 
     test "change_interaction/1 returns a interaction changeset" do
       interaction = interaction_fixture()
-      assert %Ecto.Changeset{} = Events.change_interaction(interaction)
+      assert %Ecto.Changeset{} = LiveEvents.change_interaction(interaction)
     end
   end
 end

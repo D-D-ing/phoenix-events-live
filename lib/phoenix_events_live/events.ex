@@ -1,127 +1,127 @@
-defmodule PhoenixEventsLive.Events do
+defmodule PhoenixEventsLive.LiveEvents do
   @moduledoc """
-  The Events context.
+  The LiveEvents context.
   """
 
   import Ecto.Query, warn: false
   alias PhoenixEventsLive.Repo
 
-  alias PhoenixEventsLive.Events.Event
+  alias PhoenixEventsLive.LiveEvents.LiveEvent
+  alias PhoenixEventsLive.LiveEvents.Interaction
 
   @doc """
-  Returns the list of events.
+  Returns the list of live_events.
 
   ## Examples
 
-      iex> list_events()
-      [%Event{}, ...]
+      iex> list_live_events()
+      [%LiveEvent{}, ...]
 
   """
-  def list_events do
-    Repo.all(Event)
+  def list_live_events do
+    Repo.all(LiveEvent)
   end
 
-  def list_events_preloaded do
-    Repo.all from p in Event, preload: [:interactions]
+  def list_live_events_preloaded do
+    Repo.all from p in LiveEvent, preload: [:interactions]
   end
 
   @doc """
-  Gets a single event.
+  Gets a single live_event.
 
-  Raises `Ecto.NoResultsError` if the Event does not exist.
+  Raises `Ecto.NoResultsError` if the LiveEvent does not exist.
 
   ## Examples
 
-      iex> get_event!(123)
-      %Event{}
+      iex> get_live_event!(123)
+      %LiveEvent{}
 
-      iex> get_event!(456)
+      iex> get_live_event!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_event!(id), do: Repo.get!(Event, id)
+  def get_live_event!(id), do: Repo.get!(LiveEvent, id)
 
 
   @doc """
-  Gets the single event referenced by the given accessToken.
-  Interactions are preloaded in the returned event.
+  Gets the single LiveEvent referenced by the given accessToken.
+  Interactions are preloaded in the returned LiveEvent.
 
   ## Examples
 
-    iex> get_event_by_access_token("fjdklasjfpdejkfikrnmapviurhafejeifiojeosoifj")
-    %Event{}
+    iex> get_live_event_by_access_token("fjdklasjfpdejkfikrnmapviurhafejeifiojeosoifj")
+    %LiveEvent{}
   """
-  def get_event_by_access_token(access_token) do
-    Repo.get_by(Event, [access_token: access_token])
+  def get_live_event_by_access_token(access_token) do
+    Repo.get_by(LiveEvent, [access_token: access_token])
     |> Repo.preload(:interactions)
   end
 
   @doc """
-  Creates a event.
+  Creates a LiveEvent.
 
   ## Examples
 
-      iex> create_event(%{field: value})
-      {:ok, %Event{}}
+      iex> create_live_event(%{field: value})
+      {:ok, %LiveEvent{}}
 
-      iex> create_event(%{field: bad_value})
+      iex> create_live_event(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_event(attrs \\ %{}) do
-    %Event{}
-    |> Event.changeset(attrs)
+  def create_live_event(attrs \\ %{}) do
+    %LiveEvent{}
+    |> LiveEvent.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a event.
+  Updates a LiveEvent.
 
   ## Examples
 
-      iex> update_event(event, %{field: new_value})
-      {:ok, %Event{}}
+      iex> update_live_event(live_event, %{field: new_value})
+      {:ok, %LiveEvent{}}
 
-      iex> update_event(event, %{field: bad_value})
+      iex> update_live_event(live_event, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_event(%Event{} = event, attrs) do
-    event
-    |> Event.changeset(attrs)
+  def update_live_event(%LiveEvent{} = live_event, attrs) do
+    live_event
+    |> LiveEvent.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Event.
+  Deletes a LiveEvent.
 
   ## Examples
 
-      iex> delete_event(event)
-      {:ok, %Event{}}
+      iex> delete_live_event(live_event)
+      {:ok, %LiveEvent{}}
 
-      iex> delete_event(event)
+      iex> delete_live_event(live_event)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_event(%Event{} = event) do
-    Repo.delete(event)
+  def delete_live_event(%LiveEvent{} = live_event) do
+    Repo.delete(live_event)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking event changes.
+  Returns an `%Ecto.Changeset{}` for tracking LiveEvent changes.
 
   ## Examples
 
-      iex> change_event(event)
-      %Ecto.Changeset{source: %Event{}}
+      iex> change_live_event(live_event)
+      %Ecto.Changeset{source: %LiveEvent{}}
 
   """
-  def change_event(%Event{} = event) do
-    Event.changeset(event, %{})
+  def change_live_event(%LiveEvent{} = live_event) do
+    LiveEvent.changeset(live_event, %{})
   end
 
-  alias PhoenixEventsLive.Events.Interaction
 
   @doc """
   Returns the list of interactions.

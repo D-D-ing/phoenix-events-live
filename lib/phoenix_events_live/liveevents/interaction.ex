@@ -1,4 +1,4 @@
-defmodule PhoenixEventsLive.Events.Interaction do
+defmodule PhoenixEventsLive.LiveEvents.Interaction do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,7 +9,7 @@ defmodule PhoenixEventsLive.Events.Interaction do
     field :value, :string
     field :visible, :boolean
     field :items, {:array, :string}
-    belongs_to :event, PhoenixEventsLive.Events.Event, foreign_key: :event_id
+    belongs_to :event, PhoenixEventsLive.LiveEvents.LiveEvent, foreign_key: :live_event_id
 
     timestamps()
   end
@@ -17,8 +17,8 @@ defmodule PhoenixEventsLive.Events.Interaction do
   @doc false
   def changeset(interaction, attrs) do
     interaction
-    |> cast(attrs, [:name, :type, :text, :value, :visible, :items, :event_id])
-    |> validate_required([:name, :type, :event_id])
-    |> foreign_key_constraint(:event_id)
+    |> cast(attrs, [:name, :type, :text, :value, :visible, :items, :live_event_id])
+    |> validate_required([:name, :type, :live_event_id])
+    |> foreign_key_constraint(:live_event_id)
   end
 end

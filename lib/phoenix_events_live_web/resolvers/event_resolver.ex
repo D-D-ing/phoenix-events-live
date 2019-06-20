@@ -1,8 +1,8 @@
 defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
-  alias PhoenixEventsLive.Events
+  alias PhoenixEventsLive.LiveEvents
 
   def all_events(_root, _args, %{context: %{current_user: _current_user}}) do
-    events = Events.list_events_preloaded()
+    events = LiveEvents.list_live_events_preloaded()
     {:ok, events}
   end
 
@@ -24,12 +24,12 @@ defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
   end
 
   def create_event(_root, args, %{context: %{current_user: _current_user}}) do
-    case Events.create_event(args) do
+    case LiveEvents.create_live_event(args) do
       {:ok, event} ->
         Absinthe.Subscription.publish(PhoenixEventsLiveWeb.Endpoint, event, event_created: true)
         {:ok, event}
       _error ->
-        {:error, "could not create event"}
+        {:error, "could not create live event"}
     end
   end
 
@@ -38,7 +38,7 @@ defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
   end
 
   def all_interactions(_root, _args, %{context: %{current_user: _current_user}}) do
-    interactions = Events.list_interactions()
+    interactions = LiveEvents.list_interactions()
     {:ok, interactions}
   end
 
@@ -47,7 +47,7 @@ defmodule PhoenixEventsLiveWeb.Resolvers.EventResolver do
   end
 
   def create_interaction(_root, args, %{context: %{current_user: _current_user}}) do
-    case Events.create_interaction(args) do
+    case LiveEvents.create_interaction(args) do
       {:ok, interaction} ->
         {:ok, interaction}
       _error ->
