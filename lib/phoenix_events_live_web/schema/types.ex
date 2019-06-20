@@ -10,10 +10,10 @@ defmodule PhoenixEventsLiveWeb.Schema.Types do
     field :value, :string
     field :visible, :boolean
     field :items, list_of(non_null(:string))
-    field :event_id, non_null(:id)
+    field :live_event_id, non_null(:id)
   end
 
-  object :event do
+  object :live_event do
     field :id, non_null(:id)
     field :name, non_null(:string)
     field :description, :string
